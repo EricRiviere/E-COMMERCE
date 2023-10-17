@@ -263,10 +263,28 @@ class Cart {
       const randomNumber = Math.floor(Math.random() * 10 ** 9);
       return `${randomLetter}${randomNumber}`;
     }
+
+    //Form validation
+    const validateEmail = (email) => {
+      const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      return emailPattern.test(email);
+    };
+    const validatePhone = (phone) => {
+      const phonePattern = /^\d{9}$/;
+      return phonePattern.test(phone);
+    };
+
     // Ticket info
     const ticketData = document.querySelector("#ticketData");
     const orderNumber = generateRandomOrderNumber();
-    ticketData.innerHTML = `
+    if (
+      (this.cart.length > 0) &
+      (userName != "") &
+      validateEmail(userEmail) &
+      (userLastName != "") &
+      validatePhone(userPhone)
+    ) {
+      ticketData.innerHTML = `
     <div>Total: ${this.total} $              (${currentDate})</div>
     <h3 class="text-lg mt-2">Purchase info:</h3>
     <ul>
@@ -277,8 +295,21 @@ class Cart {
       <li>Order number: ${orderNumber}</li>
     </ul>
   `;
+    } else {
+      ticketData.innerHTML = `
+      <p class="text-xl text-center">PURCHASE NOT POSSIBLE</p>
+      `;
+    }
   }
 }
+
+//Manage Close ticket modal
+const closeTicketModal = document.querySelector("#closeTicketModal");
+closeTicketModal.addEventListener("click", () => {
+  cart.emptyCart();
+  ticketList.innerHTML = " ";
+  ticketData.innerHTML = " ";
+});
 
 //Manage Empty Cart button
 const emptyCartButton = document.querySelector(".emptyCartBtn");
@@ -290,7 +321,6 @@ emptyCartButton.addEventListener("click", () => {
 const checkoutSubmit = document.querySelector("#checkout-submit");
 checkoutSubmit.addEventListener("click", (event) => {
   event.preventDefault();
-  console.log("Form submitted");
   cart.printTicket();
 });
 
