@@ -381,6 +381,7 @@ const spanProductsOnCart = document.querySelector("#productsOncart");
 const spanCartTotal = document.querySelector("#spanCartTotal");
 const productsDiv = document.querySelector("#productsDiv");
 const searchNavBar = document.querySelector("#search-navbar");
+const searchNavBarMobile = document.querySelector("#search-navbar-mobile");
 const electronicsCategory = document.querySelector("#electronics");
 const jeweleryCategory = document.querySelector("#jewelery");
 const menCategory = document.querySelector("#men");
@@ -388,6 +389,10 @@ const womenCategory = document.querySelector("#women");
 
 //Search NavBar
 searchNavBar.addEventListener("input", (event) => {
+  const word = event.target.value.toLowerCase();
+  loadProducts(DB.registerByName(word.toLowerCase()));
+});
+searchNavBarMobile.addEventListener("input", (event) => {
   const word = event.target.value.toLowerCase();
   loadProducts(DB.registerByName(word.toLowerCase()));
 });
